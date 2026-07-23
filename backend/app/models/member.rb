@@ -22,13 +22,18 @@ class Member < ApplicationRecord
 
   has_one :registration_link, dependent: :nullify
 
+  has_many :ministry_memberships, dependent: :destroy
+  has_many :ministries, through: :ministry_memberships
+  has_many :schedule_assignments, dependent: :destroy
+  has_many :schedules, through: :schedule_assignments
+
   validates :full_name, presence: true
   validates :birth_date, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
-  validates :cpf, uniqueness: true, allow_nil: true
+  validates :cpf, uniqueness: true, allow_blank: true
 
   normalizes :email, with: ->(email) { email.strip.downcase }
-  normalizes :cpf, with: ->(cpf) { cpf.gsub(/\D/, "") }
+  normalizes :cpf, with: ->(cpf) { cpf.gsub(/\D/, "").presence }
 
   validate :birth_date_cannot_be_in_the_future
 

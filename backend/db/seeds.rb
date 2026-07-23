@@ -8,3 +8,5 @@ User.find_or_create_by!(email: admin_email) do |user|
 end
 
 puts "Admin de desenvolvimento: #{admin_email} / #{admin_password}"
+
+Ministry.find_or_create_by!(name: "Louvor")

@@ -7,6 +7,10 @@ import { MembersListPage } from "./pages/MembersListPage";
 import { MemberFormPage } from "./pages/MemberFormPage";
 import { RegistrationLinksPage } from "./pages/RegistrationLinksPage";
 import { PublicRegistrationPage } from "./pages/PublicRegistrationPage";
+import { MinistriesPage } from "./pages/MinistriesPage";
+import { MinistryDetailPage } from "./pages/MinistryDetailPage";
+import { SchedulesListPage } from "./pages/SchedulesListPage";
+import { ScheduleFormPage } from "./pages/ScheduleFormPage";
 
 function App() {
   return (
@@ -53,6 +57,56 @@ function App() {
               <ProtectedRoute>
                 <DashboardLayout>
                   <RegistrationLinksPage />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ministerios"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <MinistriesPage />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ministerios/:id"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <MinistryDetailPage />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/escalas"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <SchedulesListPage />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/escalas/nova"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <ScheduleFormPage />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/escalas/:id/editar"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <ScheduleFormPage />
                 </DashboardLayout>
               </ProtectedRoute>
             }

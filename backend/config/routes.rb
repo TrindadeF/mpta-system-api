@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       resource :session, only: [:create, :show]
       resources :members
       resources :registration_links, only: [:index, :create, :destroy]
+      resources :ministries
+      resources :schedules
       get "registrations/:token", to: "registrations#show", as: :registration
       post "registrations/:token", to: "registrations#create"
     end

@@ -18,6 +18,8 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         <nav>
           <Link to="/membros">Membros</Link>
           <Link to="/links-cadastro">Links de Cadastro</Link>
+          <Link to="/ministerios">Ministérios</Link>
+          <Link to="/escalas">Escalas</Link>
         </nav>
         <div className="user-info">
           <span>{user?.name}</span>

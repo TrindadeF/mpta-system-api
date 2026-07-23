@@ -54,6 +54,36 @@ export interface RegistrationLink {
   registration_url?: string;
 }
 
+export interface MemberSummary {
+  id: number;
+  full_name: string;
+  phone?: string | null;
+}
+
+export interface Ministry {
+  id: number;
+  name: string;
+  members: MemberSummary[];
+}
+
+export interface SetlistItem {
+  id?: number;
+  title: string;
+  link: string;
+  position: number;
+  _destroy?: boolean;
+}
+
+export interface Schedule {
+  id: number;
+  ministry_id: number;
+  service_date: string;
+  title: string | null;
+  ministry: { id: number; name: string };
+  members: MemberSummary[];
+  setlist_items: SetlistItem[];
+}
+
 export const MINISTERIAL_ROLE_LABELS: Record<MinisterialRole, string> = {
   member: "Membro",
   deacon: "Diácono(isa)",
