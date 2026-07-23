@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { BrandLogo } from "./BrandLogo";
 
 export function DashboardLayout({ children }: { children: ReactNode }) {
   const { user, logout } = useAuth();
@@ -21,7 +22,10 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     <div className="dashboard">
       <header className="dashboard-header">
         <div className="dashboard-header-bar">
-          <span className="brand">Gestão de Membros</span>
+          <span className="brand">
+            <BrandLogo size={32} />
+            MPTA
+          </span>
           <button
             type="button"
             className="menu-toggle"

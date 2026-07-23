@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { ApiError } from "../api/client";
+import { BrandLogo } from "../components/BrandLogo";
 
 export function LoginPage() {
   const { login } = useAuth();
@@ -28,6 +29,10 @@ export function LoginPage() {
   return (
     <div className="centered-page">
       <form className="card form" onSubmit={handleSubmit}>
+        <div className="brand-header">
+          <BrandLogo size={72} />
+          <p className="brand-name">Ministério Profético Tabernáculo da Adoração</p>
+        </div>
         <h1>Entrar</h1>
         <p className="subtitle">Painel de gestão de membros</p>
 

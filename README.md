@@ -1,10 +1,10 @@
-# MPTA System — Gestão de Membros de Igreja
+# MPTA System — Gestão de Membros
 
-Sistema web para cadastro e gestão de membros de igreja: dados pessoais (nome,
-data de nascimento, contato), função eclesiástica/ministerial e situação de
-membresia. Um administrador pode gerar um **link de cadastro** único e
-temporário para que o próprio indivíduo preencha seus dados, sem precisar de
-login.
+Sistema web de gestão de membros do **Ministério Profético Tabernáculo da
+Adoração**: dados pessoais (nome, data de nascimento, contato), função
+eclesiástica/ministerial e situação de membresia. Um administrador pode gerar
+um **link de cadastro** único e temporário para que o próprio indivíduo
+preencha seus dados, sem precisar de login.
 
 ## Stack
 

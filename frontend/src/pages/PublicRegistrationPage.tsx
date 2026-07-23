@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useParams } from "react-router-dom";
 import { apiRequest, ApiError } from "../api/client";
 import { MINISTERIAL_ROLE_LABELS, type MinisterialRole } from "../types";
+import { BrandLogo } from "../components/BrandLogo";
 
 type LinkState = "checking" | "valid" | "invalid" | "submitted";
 
@@ -67,6 +68,10 @@ export function PublicRegistrationPage() {
     return (
       <div className="centered-page">
         <div className="card">
+          <div className="brand-header">
+            <BrandLogo size={64} />
+            <p className="brand-name">Ministério Profético Tabernáculo da Adoração</p>
+          </div>
           <h1>Link indisponível</h1>
           <p>{linkError}</p>
           <p>Entre em contato com a secretaria da igreja para receber um novo link.</p>
@@ -79,6 +84,10 @@ export function PublicRegistrationPage() {
     return (
       <div className="centered-page">
         <div className="card">
+          <div className="brand-header">
+            <BrandLogo size={64} />
+            <p className="brand-name">Ministério Profético Tabernáculo da Adoração</p>
+          </div>
           <h1>Cadastro recebido!</h1>
           <p>Obrigado por preencher seus dados. Seu cadastro foi enviado com sucesso.</p>
         </div>
@@ -89,6 +98,10 @@ export function PublicRegistrationPage() {
   return (
     <div className="centered-page">
       <form className="card form" onSubmit={handleSubmit}>
+        <div className="brand-header">
+          <BrandLogo size={64} />
+          <p className="brand-name">Ministério Profético Tabernáculo da Adoração</p>
+        </div>
         <h1>Cadastro de Membro</h1>
         <p className="subtitle">Preencha seus dados pessoais abaixo.</p>
 
