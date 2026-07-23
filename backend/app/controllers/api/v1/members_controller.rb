@@ -43,7 +43,7 @@ module Api
       def member_params
         params.require(:member).permit(
           :full_name, :birth_date, :email, :phone, :cpf, :address,
-          :ministerial_role, :membership_status, :joined_at, :notes
+          :ministerial_role, :membership_status, :joined_at, :notes, :photo
         )
       end
     end

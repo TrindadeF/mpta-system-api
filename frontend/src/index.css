@@ -90,6 +90,33 @@ h1 {
   font-weight: 500;
 }
 
+.photo-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.photo-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+}
+
+.avatar-thumb {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-thumb-placeholder {
+  background: var(--border);
+}
+
 input,
 select,
 textarea {

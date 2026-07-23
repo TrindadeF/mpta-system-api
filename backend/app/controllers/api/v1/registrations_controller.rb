@@ -22,7 +22,7 @@ module Api
         member = Member.new(member_params)
 
         ActiveRecord::Base.transaction do
-          member.save!
+          member.save!(context: :self_registration)
           @link.mark_used!(member)
         end
 
@@ -40,7 +40,7 @@ module Api
       def member_params
         params.require(:member).permit(
           :full_name, :birth_date, :email, :phone, :cpf, :address,
-          :ministerial_role
+          :ministerial_role, :photo
         )
       end
     end

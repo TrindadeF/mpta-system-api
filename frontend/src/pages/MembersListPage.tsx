@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { apiRequest, ApiError } from "../api/client";
+import { apiRequest, ApiError, resolvePhotoUrl } from "../api/client";
 import {
   MEMBERSHIP_STATUS_LABELS,
   MINISTERIAL_ROLE_LABELS,
@@ -49,6 +49,7 @@ export function MembersListPage() {
           <table className="table">
             <thead>
               <tr>
+                <th />
                 <th>Nome</th>
                 <th>Nascimento</th>
                 <th>Função</th>
@@ -59,6 +60,13 @@ export function MembersListPage() {
             <tbody>
               {members.map((member) => (
                 <tr key={member.id}>
+                  <td>
+                    {member.photo_url ? (
+                      <img src={resolvePhotoUrl(member.photo_url) ?? undefined} alt="" className="avatar-thumb" />
+                    ) : (
+                      <span className="avatar-thumb avatar-thumb-placeholder" />
+                    )}
+                  </td>
                   <td>{member.full_name}</td>
                   <td>{new Date(member.birth_date).toLocaleDateString("pt-BR", { timeZone: "UTC" })}</td>
                   <td>{MINISTERIAL_ROLE_LABELS[member.ministerial_role]}</td>

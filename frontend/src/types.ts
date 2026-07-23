@@ -38,6 +38,7 @@ export interface Member {
   membership_status: MembershipStatus;
   joined_at: string | null;
   notes: string | null;
+  photo_url: string | null;
 }
 
 export type MemberInput = Omit<Member, "id">;
@@ -58,6 +59,7 @@ export interface MemberSummary {
   id: number;
   full_name: string;
   phone?: string | null;
+  photo_url?: string | null;
 }
 
 export interface Ministry {

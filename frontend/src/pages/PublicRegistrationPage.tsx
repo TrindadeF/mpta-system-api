@@ -1,6 +1,6 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useParams } from "react-router-dom";
-import { apiRequest, ApiError } from "../api/client";
+import { apiRequest, apiUpload, ApiError } from "../api/client";
 import { MINISTERIAL_ROLE_LABELS, type MinisterialRole } from "../types";
 import { BrandLogo } from "../components/BrandLogo";
 
@@ -21,8 +21,19 @@ export function PublicRegistrationPage() {
   const [linkState, setLinkState] = useState<LinkState>("checking");
   const [linkError, setLinkError] = useState<string | null>(null);
   const [form, setForm] = useState(emptyForm);
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
+
+  function handlePhotoChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0] ?? null;
+    setPhoto(file);
+    setPhotoPreview((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return file ? URL.createObjectURL(file) : null;
+    });
+  }
 
   useEffect(() => {
     apiRequest(`/api/v1/registrations/${token}`, { auth: false })
@@ -36,13 +47,19 @@ export function PublicRegistrationPage() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setErrors([]);
+
+    if (!photo) {
+      setErrors(["Envie uma foto para concluir o cadastro."]);
+      return;
+    }
+
     setSubmitting(true);
     try {
-      await apiRequest(`/api/v1/registrations/${token}`, {
-        method: "POST",
-        body: { member: form },
-        auth: false,
-      });
+      const formData = new FormData();
+      Object.entries(form).forEach(([key, value]) => formData.append(`member[${key}]`, value));
+      formData.append("member[photo]", photo);
+
+      await apiUpload(`/api/v1/registrations/${token}`, formData, { auth: false });
       setLinkState("submitted");
     } catch (err) {
       if (err instanceof ApiError && err.body && typeof err.body === "object" && "errors" in err.body) {
@@ -104,6 +121,14 @@ export function PublicRegistrationPage() {
         </div>
         <h1>Cadastro de Membro</h1>
         <p className="subtitle">Preencha seus dados pessoais abaixo.</p>
+
+        <label>
+          Foto (obrigatória)
+          <div className="photo-upload">
+            {photoPreview && <img src={photoPreview} alt="Prévia da foto" className="photo-preview" />}
+            <input type="file" accept="image/*" capture="user" onChange={handlePhotoChange} required />
+          </div>
+        </label>
 
         <label>
           Nome completo

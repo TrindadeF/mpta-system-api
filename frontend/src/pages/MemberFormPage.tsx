@@ -1,6 +1,6 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { apiRequest, ApiError } from "../api/client";
+import { apiRequest, apiUpload, ApiError, resolvePhotoUrl } from "../api/client";
 import {
   MEMBERSHIP_STATUS_LABELS,
   MINISTERIAL_ROLE_LABELS,
@@ -28,6 +28,9 @@ export function MemberFormPage() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState(emptyForm);
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [existingPhotoUrl, setExistingPhotoUrl] = useState<string | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(isEditing);
   const [submitting, setSubmitting] = useState(false);
@@ -35,7 +38,7 @@ export function MemberFormPage() {
   useEffect(() => {
     if (!isEditing) return;
     apiRequest<Member>(`/api/v1/members/${id}`)
-      .then((member) =>
+      .then((member) => {
         setForm({
           full_name: member.full_name,
           birth_date: member.birth_date,
@@ -47,10 +50,20 @@ export function MemberFormPage() {
           membership_status: member.membership_status,
           joined_at: member.joined_at ?? "",
           notes: member.notes ?? "",
-        }),
-      )
+        });
+        setExistingPhotoUrl(resolvePhotoUrl(member.photo_url));
+      })
       .finally(() => setLoading(false));
   }, [id, isEditing]);
+
+  function handlePhotoChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0] ?? null;
+    setPhoto(file);
+    setPhotoPreview((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return file ? URL.createObjectURL(file) : null;
+    });
+  }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -58,7 +71,11 @@ export function MemberFormPage() {
     setSubmitting(true);
     try {
       const path = isEditing ? `/api/v1/members/${id}` : "/api/v1/members";
-      await apiRequest(path, { method: isEditing ? "PATCH" : "POST", body: { member: form } });
+      const formData = new FormData();
+      Object.entries(form).forEach(([key, value]) => formData.append(`member[${key}]`, value));
+      if (photo) formData.append("member[photo]", photo);
+
+      await apiUpload(path, formData, { method: isEditing ? "PATCH" : "POST" });
       navigate("/membros");
     } catch (err) {
       if (err instanceof ApiError && err.body && typeof err.body === "object" && "errors" in err.body) {
@@ -79,6 +96,16 @@ export function MemberFormPage() {
       <h1>{isEditing ? "Editar membro" : "Novo membro"}</h1>
 
       <form className="card form" onSubmit={handleSubmit}>
+        <label>
+          Foto
+          <div className="photo-upload">
+            {(photoPreview ?? existingPhotoUrl) && (
+              <img src={photoPreview ?? existingPhotoUrl ?? undefined} alt="Foto do membro" className="photo-preview" />
+            )}
+            <input type="file" accept="image/*" onChange={handlePhotoChange} />
+          </div>
+        </label>
+
         <label>
           Nome completo
           <input
