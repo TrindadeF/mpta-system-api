@@ -128,14 +128,30 @@ button:disabled {
   border-bottom: 1px solid var(--border);
 }
 
+.dashboard-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .dashboard-header .brand {
   font-weight: 700;
+  white-space: nowrap;
+}
+
+.dashboard-header-collapsible {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .dashboard-header nav {
   display: flex;
   gap: 1.25rem;
   flex: 1;
+  flex-wrap: wrap;
 }
 
 .dashboard-header nav a {
@@ -154,6 +170,71 @@ button:disabled {
   gap: 1rem;
   font-size: 0.9rem;
   color: var(--muted);
+  white-space: nowrap;
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  padding: 8px;
+  margin-left: auto;
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+}
+
+.menu-toggle:hover {
+  background: var(--bg);
+}
+
+.menu-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+}
+
+@media (max-width: 900px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.75rem 1rem;
+  }
+
+  .dashboard-header-bar {
+    justify-content: space-between;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .dashboard-header-collapsible {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding-top: 1rem;
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .dashboard-header-collapsible.is-open {
+    display: flex;
+  }
+
+  .dashboard-header nav {
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .user-info {
+    justify-content: space-between;
+  }
 }
 
 .dashboard-content {
@@ -174,14 +255,21 @@ button:disabled {
   margin-top: 3rem;
 }
 
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
 .table {
   width: 100%;
+  min-width: 560px;
   border-collapse: collapse;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
   overflow: hidden;
-  margin-top: 1rem;
 }
 
 .table th,
@@ -189,6 +277,7 @@ button:disabled {
   text-align: left;
   padding: 0.65rem 1rem;
   border-bottom: 1px solid var(--border);
+  white-space: nowrap;
 }
 
 .table th {
@@ -253,4 +342,40 @@ button:disabled {
 
 .setlist-row input {
   flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .dashboard-content {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  .page-header {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .inline-form {
+    flex-direction: column;
+  }
+
+  .inline-form input {
+    max-width: none;
+  }
+
+  .setlist-row {
+    flex-wrap: wrap;
+  }
+
+  .setlist-row input {
+    flex-basis: 100%;
+  }
+
+  .setlist-row .link-button {
+    margin-left: auto;
+  }
 }

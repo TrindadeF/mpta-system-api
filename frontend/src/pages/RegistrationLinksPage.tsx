@@ -71,37 +71,39 @@ export function RegistrationLinksPage() {
       {links && links.length === 0 && <p>Nenhum link gerado ainda.</p>}
 
       {links && links.length > 0 && (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Status</th>
-              <th>Expira em</th>
-              <th>Preenchido por</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {links.map((link) => (
-              <tr key={link.id}>
-                <td>{STATUS_LABELS[link.status]}</td>
-                <td>{new Date(link.expires_at).toLocaleString("pt-BR")}</td>
-                <td>{link.member?.full_name ?? "—"}</td>
-                <td className="table-actions">
-                  {link.status === "pending" && (
-                    <>
-                      <button className="link-button" onClick={() => handleCopy(link)}>
-                        {copiedId === link.id ? "Copiado!" : "Copiar link"}
-                      </button>
-                      <button className="link-button" onClick={() => handleRevoke(link)}>
-                        Revogar
-                      </button>
-                    </>
-                  )}
-                </td>
+        <div className="table-scroll">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Expira em</th>
+                <th>Preenchido por</th>
+                <th />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {links.map((link) => (
+                <tr key={link.id}>
+                  <td>{STATUS_LABELS[link.status]}</td>
+                  <td>{new Date(link.expires_at).toLocaleString("pt-BR")}</td>
+                  <td>{link.member?.full_name ?? "—"}</td>
+                  <td className="table-actions">
+                    {link.status === "pending" && (
+                      <>
+                        <button className="link-button" onClick={() => handleCopy(link)}>
+                          {copiedId === link.id ? "Copiado!" : "Copiar link"}
+                        </button>
+                        <button className="link-button" onClick={() => handleRevoke(link)}>
+                          Revogar
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

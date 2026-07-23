@@ -45,33 +45,35 @@ export function MembersListPage() {
       {members && members.length === 0 && <p>Nenhum membro cadastrado ainda.</p>}
 
       {members && members.length > 0 && (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Nascimento</th>
-              <th>Função</th>
-              <th>Situação</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {members.map((member) => (
-              <tr key={member.id}>
-                <td>{member.full_name}</td>
-                <td>{new Date(member.birth_date).toLocaleDateString("pt-BR", { timeZone: "UTC" })}</td>
-                <td>{MINISTERIAL_ROLE_LABELS[member.ministerial_role]}</td>
-                <td>{MEMBERSHIP_STATUS_LABELS[member.membership_status]}</td>
-                <td className="table-actions">
-                  <Link to={`/membros/${member.id}/editar`}>Editar</Link>
-                  <button className="link-button" onClick={() => handleDelete(member)}>
-                    Remover
-                  </button>
-                </td>
+        <div className="table-scroll">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Nascimento</th>
+                <th>Função</th>
+                <th>Situação</th>
+                <th />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {members.map((member) => (
+                <tr key={member.id}>
+                  <td>{member.full_name}</td>
+                  <td>{new Date(member.birth_date).toLocaleDateString("pt-BR", { timeZone: "UTC" })}</td>
+                  <td>{MINISTERIAL_ROLE_LABELS[member.ministerial_role]}</td>
+                  <td>{MEMBERSHIP_STATUS_LABELS[member.membership_status]}</td>
+                  <td className="table-actions">
+                    <Link to={`/membros/${member.id}/editar`}>Editar</Link>
+                    <button className="link-button" onClick={() => handleDelete(member)}>
+                      Remover
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

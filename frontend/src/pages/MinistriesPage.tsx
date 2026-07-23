@@ -55,26 +55,28 @@ export function MinistriesPage() {
       {ministries && ministries.length === 0 && <p>Nenhum ministério cadastrado ainda.</p>}
 
       {ministries && ministries.length > 0 && (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Membros</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {ministries.map((ministry) => (
-              <tr key={ministry.id}>
-                <td>{ministry.name}</td>
-                <td>{ministry.members.length}</td>
-                <td className="table-actions">
-                  <Link to={`/ministerios/${ministry.id}`}>Gerenciar membros</Link>
-                </td>
+        <div className="table-scroll">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Membros</th>
+                <th />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {ministries.map((ministry) => (
+                <tr key={ministry.id}>
+                  <td>{ministry.name}</td>
+                  <td>{ministry.members.length}</td>
+                  <td className="table-actions">
+                    <Link to={`/ministerios/${ministry.id}`}>Gerenciar membros</Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

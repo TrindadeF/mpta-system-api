@@ -39,35 +39,37 @@ export function SchedulesListPage() {
       {schedules && schedules.length === 0 && <p>Nenhuma escala cadastrada ainda.</p>}
 
       {schedules && schedules.length > 0 && (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Ministério</th>
-              <th>Título</th>
-              <th>Data</th>
-              <th>Escalados</th>
-              <th>Setlist</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {schedules.map((schedule) => (
-              <tr key={schedule.id}>
-                <td>{schedule.ministry.name}</td>
-                <td>{schedule.title ?? "—"}</td>
-                <td>{new Date(schedule.service_date).toLocaleString("pt-BR")}</td>
-                <td>{schedule.members.length}</td>
-                <td>{schedule.setlist_items.length} música(s)</td>
-                <td className="table-actions">
-                  <Link to={`/escalas/${schedule.id}/editar`}>Editar</Link>
-                  <button className="link-button" onClick={() => handleDelete(schedule)}>
-                    Remover
-                  </button>
-                </td>
+        <div className="table-scroll">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Ministério</th>
+                <th>Título</th>
+                <th>Data</th>
+                <th>Escalados</th>
+                <th>Setlist</th>
+                <th />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {schedules.map((schedule) => (
+                <tr key={schedule.id}>
+                  <td>{schedule.ministry.name}</td>
+                  <td>{schedule.title ?? "—"}</td>
+                  <td>{new Date(schedule.service_date).toLocaleString("pt-BR")}</td>
+                  <td>{schedule.members.length}</td>
+                  <td>{schedule.setlist_items.length} música(s)</td>
+                  <td className="table-actions">
+                    <Link to={`/escalas/${schedule.id}/editar`}>Editar</Link>
+                    <button className="link-button" onClick={() => handleDelete(schedule)}>
+                      Remover
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
